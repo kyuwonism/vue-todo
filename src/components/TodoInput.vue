@@ -1,6 +1,6 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
+    <input type="text" v-model="newTodoItem" v-on:keypress.enter="addTodo">
     <span class="addContainer" v-on:click="addTodo">
             <i class="fas fa-plus addBtn"></i>
         </span>
@@ -11,15 +11,14 @@
           default content
       -->
       <template v-slot:header>
-        <h3>경고!</h3>
+        <h3>
+          경고!
+          <i class="closeModalBtn fas fa-times" @click="showModal = false"></i>
+        </h3>
       </template>
 
       <template v-slot:body>
         <span>무언가를 입력하세요</span>
-      </template>
-
-      <template v-slot:footer>
-        <span>copy right:</span>
       </template>
     </AlertModal>
   </div>
@@ -29,28 +28,28 @@
 import AlertModal from './common/AlertModal.vue'
 
 export default {
-  data: function () {
+  data() {
     return {
       newTodoItem: "",
       showModal: false
     }
   },
   methods: {
-    addTodo: function () {
+    addTodo() {
       if (this.newTodoItem !== '') {
         this.$emit('addTodoItem', this.newTodoItem);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
       }
-    },
-    clearInput: function () {
+    }g,
+    clearInput() {
       this.newTodoItem = '';
     }
 
   },
   components: {
-    AlertModal: AlertModal
+    AlertModal
   }
 }
 </script>
@@ -84,5 +83,10 @@ input:focus {
 .addBtn {
   color: white;
   vertical-align: middle;
+}
+
+.closeModalBtn {
+  color: #42B983;
+
 }
 </style>
